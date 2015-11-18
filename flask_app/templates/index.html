@@ -6,14 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <title>NY Food Grades</title>
+    <link rel="stylesheet" href="/static/css/simplex_bootstrap.min.css">
     <link href="/static/css/metricsgraphics.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
-    <div id='ufo-sightings'></div>
+    <div class="container">
+        <h1>Distribution of NY Food Grades</h1>
+        <p class="lead">All Cuisine Types</p>
+        <div id='food-line-chart'></div>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -21,18 +24,16 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.min.js' charset='utf-8'></script>
     <script src="/static/js/metricsgraphics.min.js"></script>
     <script>
-    d3.json('/static/data/avg_food_score_time.json', function(data) {
-      for (var i=0; i < data.length; i++){
-        data[i]['INSPECTION DATE'] = new Date(data[i]['INSPECTION DATE'])
-      }
+    d3.json('/static/data/grade_dist.json', function(data) {
         MG.data_graphic({
             data: data,
             width: 650,
             height: 420,
-            target: '#ufo-sightings',
-            x_accessor: 'INSPECTION DATE',
-            y_accessor: 'AVERAGE SCORE',
-            area: false
+            target: '#food-line-chart',
+            chart_type: 'bar',
+            bar_orientation: 'vertical',
+            y_accessor: 'count',
+            x_accessor: 'grade',
         })
     })
     </script>
